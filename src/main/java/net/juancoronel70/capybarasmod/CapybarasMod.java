@@ -21,6 +21,7 @@ public class CapybarasMod
 {
 
     public static final String MOD_ID = "capybarasmod";
+
     private static final Logger LOGGER = LogUtils.getLogger();
 
 
