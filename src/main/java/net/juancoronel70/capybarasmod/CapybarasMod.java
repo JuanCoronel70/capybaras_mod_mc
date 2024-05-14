@@ -1,7 +1,13 @@
 package net.juancoronel70.capybarasmod;
 
 import com.mojang.logging.LogUtils;
+import net.juancoronel70.capybarasmod.datagen.ModItemModelProvider;
+import net.juancoronel70.capybarasmod.entity.ModEntityTypes;
+import net.juancoronel70.capybarasmod.entity.client.CapybaraRenderer;
+import net.juancoronel70.capybarasmod.entity.custom.CapybaraEntity;
 import net.juancoronel70.capybarasmod.item.ModItems;
+import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -14,6 +20,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.slf4j.Logger;
+import software.bernie.geckolib.GeckoLib;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(CapybarasMod.MOD_ID)
@@ -31,6 +38,13 @@ public class CapybarasMod
 
         //added line for items
         ModItems.register(modEventBus);
+
+        //added line for entities
+        ModEntityTypes.register(modEventBus);
+
+        //Initialize GeckoLib
+        GeckoLib.initialize();
+
 
         modEventBus.addListener(this::commonSetup);
 
@@ -55,7 +69,7 @@ public class CapybarasMod
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event)
         {
-
+            EntityRenderers.register(ModEntityTypes.CAPYBARA.get(), CapybaraRenderer::new);
         }
     }
 }
